@@ -2,18 +2,18 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <!--<Inputs></Inputs>-->
+    <Inputs></Inputs>
     <Item></Item>
   </div>
 </template>
 
 <script>
 import Item from "./components/Item";
-
+import Inputs from "./components/Inputs";
 export default {
   name: 'app',
   components: {
-
+      Inputs,
       Item
   }
 }

@@ -9,25 +9,12 @@
 
 <script>
     /* eslint-disable vue/no-shared-component-data,no-unused-vars,no-console,no-undef */
-    import Bus from '../bus';
+    import global from '../common.vue';
     export default {
         name: "Item",
         data(){
             return {
-                items:[
-                    {
-                        name: 1,
-                        active: true
-                    },
-                    {
-                        name: 2,
-                        active: true
-                    },
-                    {
-                        name: 3,
-                        active: true
-                    }
-                ]
+                items:global.items
             }
         }
     }
