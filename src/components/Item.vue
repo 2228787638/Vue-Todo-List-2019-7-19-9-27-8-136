@@ -1,7 +1,9 @@
 <template>
     <div>
         <p v-for="item in items">
-            <label><input type="checkbox"/>{{item.name}}</label>
+            {{item.id}}.<label @change="clickMe(item.id)" v-bind:class="{changeCheckbox:item.active}">
+                <input type="checkbox" v-model="item.active"/>{{item.name}}
+            </label>
         </p>
 
     </div>
@@ -16,11 +18,17 @@
             return {
                 items:global.items
             }
+        },
+        methods: {
+            clickMe(id) {
+                alert(global.items[id-1].active);
+            }
+
         }
     }
 
 </script>
 
 <style scoped>
-
+    @import '../common.css';
 </style>
