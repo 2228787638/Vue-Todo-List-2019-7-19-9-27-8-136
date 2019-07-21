@@ -1,20 +1,12 @@
 <template>
     <div>
         <div v-for="item in items">
-            <div v-if="status===0">
-                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}">
-                    <input type="checkbox" v-model="item.active"/>{{item.name}}
+            <div v-if="status===0||status===1&&item.active===false||status===2&&item.active===true">
+                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}" v-on:dblclick="changeContent(item.id,item.name)">
+                <input type="checkbox" v-model="item.active"/>
+                <span v-if="item.editFlag">{{item.name}}</span>
+                <span v-else><input v-model="item.name" type="text" @keyup.enter="enterClick(item.id)"></span>
                 </label>
-            </div>
-            <div v-else-if="status===1&&item.active===false">
-                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}">
-                <input type="checkbox" v-model="item.active"/>{{item.name}}
-            </label>
-            </div>
-            <div v-else-if="status===2&&item.active===true">
-                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}">
-                <input type="checkbox" v-model="item.active"/>{{item.name}}
-            </label>
             </div>
         </div>
         <span @click="change(0)">All</span>
@@ -39,8 +31,13 @@
                 this.status=flag;
                 global.status=flag;
                 //alert(global.status);
+            },
+            changeContent(id,name){
+                this.items[id-1].editFlag=false;
+            },
+            enterClick(id){
+                this.items[id-1].editFlag=true;
             }
-
         }
     }
 
