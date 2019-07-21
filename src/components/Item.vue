@@ -1,17 +1,20 @@
 <template>
     <div>
         <div v-for="item in items">
-            <div v-if="status===0||status===1&&item.active===false||status===2&&item.active===true">
-                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}" v-on:dblclick="changeContent(item.id,item.name)">
+            <div v-if="status===0||status===1&&item.active===false||status===2&&item.active===true" class="itemstyle">
+                {{item.id}}.
                 <input type="checkbox" v-model="item.active"/>
+                <label v-bind:class="{changeCheckbox:item.active}" v-on:dblclick="changeContent(item.id,item.name)">
                 <span v-if="item.editFlag">{{item.name}}</span>
                 <span v-else><input v-model="item.name" type="text" @keyup.enter="enterClick(item.id)"></span>
                 </label>
             </div>
         </div>
-        <span @click="change(0)">All</span>
-        <span @click="change(1)">Active</span>
-        <span @click="change(2)">Complete</span>
+        <ul class="footer">
+            <li @click="change(0)" :class="{active:categoryIndex==0}">All</li>&nbsp;&nbsp;
+            <li @click="change(1)" :class="{active:categoryIndex==1}">Active</li>&nbsp;&nbsp;
+            <li @click="change(2)" :class="{active:categoryIndex==2}">Complete</li>
+        </ul>
     </div>
 </template>
 
@@ -23,14 +26,15 @@
         data(){
             return {
                 items:global.items,
-                status:global.status
+                status:global.status,
+                categoryIndex: 0
             }
         },
         methods: {
             change(flag) {
                 this.status=flag;
                 global.status=flag;
-                //alert(global.status);
+                this.categoryIndex = flag;
             },
             changeContent(id,name){
                 this.items[id-1].editFlag=false;
@@ -45,4 +49,5 @@
 
 <style scoped>
     @import '../common.css';
+
 </style>
