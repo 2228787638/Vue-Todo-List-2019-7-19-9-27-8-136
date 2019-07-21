@@ -13,6 +13,7 @@ import Inputs from "./components/Inputs";
 export default {
   name: 'app',
   components: {
+
       Inputs,
       Item
   }

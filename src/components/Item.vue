@@ -1,11 +1,25 @@
 <template>
     <div>
-        <p v-for="item in items">
-            {{item.id}}.<label @change="clickMe(item.id)" v-bind:class="{changeCheckbox:item.active}">
+        <div v-for="item in items">
+            <div v-if="status===0">
+                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}">
+                    <input type="checkbox" v-model="item.active"/>{{item.name}}
+                </label>
+            </div>
+            <div v-else-if="status===1&&item.active===false">
+                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}">
                 <input type="checkbox" v-model="item.active"/>{{item.name}}
             </label>
-        </p>
-
+            </div>
+            <div v-else-if="status===2&&item.active===true">
+                {{item.id}}.<label v-bind:class="{changeCheckbox:item.active}">
+                <input type="checkbox" v-model="item.active"/>{{item.name}}
+            </label>
+            </div>
+        </div>
+        <span @click="change(0)">All</span>
+        <span @click="change(1)">Active</span>
+        <span @click="change(2)">Complete</span>
     </div>
 </template>
 
@@ -16,12 +30,15 @@
         name: "Item",
         data(){
             return {
-                items:global.items
+                items:global.items,
+                status:global.status
             }
         },
         methods: {
-            clickMe(id) {
-                alert(global.items[id-1].active);
+            change(flag) {
+                this.status=flag;
+                global.status=flag;
+                //alert(global.status);
             }
 
         }

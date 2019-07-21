@@ -7,7 +7,8 @@
         name: "common.vue",
         items:[
 
-        ]
+        ],
+        status: 0
     }
 </script>
 
