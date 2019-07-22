@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import global from '../common.vue';
+    // import global from '../common.vue';
     export default {
         name: "Inputs",
         data(){
@@ -16,9 +16,10 @@
         },
         methods:{
             add(){
-                let id = global.items.length+1;
+                let id = this.$store.state.items.length+1;
                 let objs={"id":id,"name":this.msg,"active":false,"editFlag":true};
-                global.items.push(objs);
+                this.$store.commit('addItems',objs);
+                //this.$store.state.items.push(objs);
                 this.msg="";
             }
         }

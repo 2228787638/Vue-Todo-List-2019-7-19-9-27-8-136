@@ -1,8 +1,9 @@
 <template>
     <div>
-        <div v-for="item in items">
-            <div v-if="status===0||status===1&&item.active===false||status===2&&item.active===true" class="itemstyle">
-                {{item.id}}.
+        <div v-for="item in this.$store.state.items" :key="item.id">
+            <div v-if="this.$store.state.status===0||this.$store.state.status===1
+            &&item.active===false||this.$store.state.status===2&&item.active===true" class="itemstyle">
+                {{id}}.
                 <input type="checkbox" v-model="item.active"/>
                 <label v-bind:class="{changeCheckbox:item.active}" v-on:dblclick="changeContent(item.id,item.name)">
                 <span v-if="item.editFlag">{{item.name}}</span>
@@ -25,22 +26,28 @@
         name: "Item",
         data(){
             return {
-                items:global.items,
-                status:global.status,
+                id:1,
+                // items:this.$store.state.items,
+                // status:this.$store.state.status,
                 categoryIndex: 0
             }
         },
         methods: {
             change(flag) {
-                this.status=flag;
-                global.status=flag;
+                this.$store.commit('changeStatus',flag);
+                // this.status=flag;
+                // this.$store.state.status=flag;
+
                 this.categoryIndex = flag;
+                this.id=1;
             },
             changeContent(id,name){
-                this.items[id-1].editFlag=false;
+                this.$store.commit('changeEditFlag',id-1);
+                //this.items[id-1].editFlag=false;
             },
             enterClick(id){
-                this.items[id-1].editFlag=true;
+                this.$store.commit('enterClick',id-1);
+                //this.items[id-1].editFlag=true;
             }
         }
     }
