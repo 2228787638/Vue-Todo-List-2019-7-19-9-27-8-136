@@ -1,8 +1,9 @@
 <template>
     <div>
-        <div v-for="item in items">
-            <div v-if="status===0||status===1&&item.active===false||status===2&&item.active===true" class="itemstyle">
-                {{item.id}}.
+        <div v-for="(item,index) in items">
+
+            <div class="itemstyle">
+                {{index+1}}.
                 <input type="checkbox" v-model="item.active"/>
                 <label v-bind:class="{changeCheckbox:item.active}" v-on:dblclick="changeContent(item.id,item.name)">
                 <span v-if="item.editFlag">{{item.name}}</span>
@@ -35,6 +36,12 @@
                 this.status=flag;
                 global.status=flag;
                 this.categoryIndex = flag;
+                switch (flag) {
+                    case 0:this.items=global.items;break;
+                    case 1:this.items=global.items.filter(i=>{return !i.active});break;
+                    case 2:this.items=global.items.filter(i=>{return i.active});break;
+                }
+
             },
             changeContent(id,name){
                 this.items[id-1].editFlag=false;
